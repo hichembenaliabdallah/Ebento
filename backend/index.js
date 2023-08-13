@@ -8,7 +8,7 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-
+import { isAuthenticated } from "./middleware/auth.js";
 dotenv.config();
 const app = express();
 app.use(cookieParser());
@@ -43,3 +43,4 @@ mongoose
     // Post.insertMany(posts);
   })
   .catch((error) => console.log(`${error} did not connect`));
+app.get("/isAuthenticated", isAuthenticated);

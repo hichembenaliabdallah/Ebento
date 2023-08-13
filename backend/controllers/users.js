@@ -1,9 +1,12 @@
 import User from "../models/User.js";
-
+import jwt from "jsonwebtoken";
 /* READ */
 export const getUser = async (req, res) => {
   try {
-    const { id } = req.params;
+    token = req.cookies.token;
+    let decoded = jwt.decode(token, { complete: true });
+    let id = decoded.id;
+
     const user = await User.findById(id);
     res.status(200).json(user);
   } catch (err) {

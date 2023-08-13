@@ -1,9 +1,15 @@
 import { create } from "zustand";
 
 interface GenerationState {
-  isLogged: boolean;
+  user: any;
+
+  setUser: (user: any) => void;
 }
 
-export const useGenerationStore = create<GenerationState>()(() => ({
-  isLogged: false,
+const useAuthStore = create<GenerationState>((set) => ({
+  user: null,
+
+  setUser: (user: any) => set({ user }),
 }));
+
+export default useAuthStore;

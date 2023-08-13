@@ -37,8 +37,7 @@ export const login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    res.cookie("token", token, { expires: new Date(Date.now() + 9999999) });
-
+    res.cookie("token", token, { httpOnly: true, maxAge: 3600000 });
     delete user.password;
     res.status(200).json({ token, user });
   } catch (err) {

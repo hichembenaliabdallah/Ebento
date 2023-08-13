@@ -19,3 +19,25 @@ export const verifyToken = async (req, res, next) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+export const isAuthenticated = async (req, res, next) => {
+  let token = req.cookies.token;
+  if (req.cookies && req.cookies.token) {
+    try {
+      console.log(token);
+
+      let decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      if (decoded) {
+        res.send({ isAuthenticated: true });
+        req.user = verified;
+        next();
+      } else {
+        res.send({ isAuthenticated: false });
+      }
+    } catch (err) {
+      res.send({ isAuthenticated: false });
+      res.status(500).json({ error: err.message });
+    }
+  }
+};
